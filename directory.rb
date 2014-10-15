@@ -22,7 +22,11 @@ puts "-----------"
 end
 
 def print(students)
-students.each_with_index {|student, index| puts "#{index+1}.#{student[:name]} (#{student[:cohort]}) cohort"}
+students.each_with_index do |student, index| 
+	if  student[:name].match('^A')
+	puts "#{index+1}.#{student[:name]} (#{student[:cohort]}) cohort"
+	end
+end
 end
 
 def print_footer(names)
@@ -34,10 +38,12 @@ def input_students
 	puts "To finish, just hit return twice"
 	students = []
 	name = gets.chomp
+	name = name.capitalize
 	while !name.empty? do 
 		students << {:name => name, :cohort => :november}
 		puts "Now we have #{students.length} students"
 		name = gets.chomp
+		name = name.capitalize
 	end
 	students
 end
