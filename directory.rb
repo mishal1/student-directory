@@ -30,7 +30,11 @@ end
 
 def print_footer(names)
 	width =50
-	puts "Overall, we have #{names.length} great students".center(width)
+	if names.length == 1
+		puts "Overall, we have #{names.length} great student".center(width)
+	else
+		puts "Overall, we have #{names.length} great students".center(width)
+	end
 end
 
 def input_students
@@ -62,7 +66,11 @@ def input_students
 		puts "What is the students height?".center(width)
 		height = gets.chomp
 		students << {:name => name, :cohort => cohort, :hobbies => hobbies, :origin=>origin, :height=> height}
-		puts "Now we have #{students.length} students".center(width)
+		if students.length == 1
+			puts "Now we have #{students.length} student".center(width)
+		else
+			puts "Now we have #{students.length} students".center(width)
+		end
 		puts "Please enter the name of the students".center(width)
 		puts "To finish, just hit return twice".center(width)
 		name = gets.chomp
