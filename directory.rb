@@ -14,7 +14,6 @@ students =[
 
 
 =end
-
 def print_header
 	width =50
 	puts "The students of my cohort at Makers Academy".center(width)
@@ -37,6 +36,7 @@ def print_footer(names)
 end
 
 def input_students
+	require 'date'
 	width =50
 	puts "Please enter the name of the students".center(width)
 	puts "To finish, just hit return twice".center(width)
@@ -44,7 +44,19 @@ def input_students
 	name = gets.chomp
 	name = name.capitalize
 	while !name.empty? do
-		
+		puts "What cohort is the student in?".center(width)
+		cohort=gets.chomp
+			until Date::MONTHNAMES.include?(cohort) || cohort.empty?
+				puts "Please eneter again what cohort is the student in?".center(width)
+				cohort=gets.chomp
+				cohort = cohort.capitalize
+			end
+
+			if cohort.empty? 
+				cohort = :november
+			else 
+				cohort = cohort.to_sym
+			end
 		puts "What are the student's hobbies?".center(width)
 		hobbies = gets.chomp
 		puts "Where is the student's country of birth?".center(width)
