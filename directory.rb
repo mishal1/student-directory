@@ -43,14 +43,14 @@ def input_students
 	puts "Please enter the name of the students".center(width)
 	puts "To finish, just hit return twice".center(width)
 	students = []
-	name = gets.chomp
+	name = gets.chop
 	name = name.capitalize
 	while !name.empty? do
 		puts "What cohort is the student in?".center(width)
-		cohort=gets.chomp
+		cohort=gets.chop
 			until Date::MONTHNAMES.include?(cohort.capitalize) || cohort.empty?
 				puts "Please eneter again what cohort is the student in?".center(width)
-				cohort=gets.chomp
+				cohort=gets.chop
 				cohort = cohort.downcase
 			end
 
@@ -60,11 +60,11 @@ def input_students
 				cohort = cohort.to_sym
 			end
 		puts "What are the student's hobbies?".center(width)
-		hobbies = gets.chomp
+		hobbies = gets.chop
 		puts "Where is the student's country of birth?".center(width)
-		origin = gets.chomp
+		origin = gets.chop
 		puts "What is the students height?".center(width)
-		height = gets.chomp
+		height = gets.chop
 		students << {:name => name, :cohort => cohort, :hobbies => hobbies, :origin=>origin, :height=> height}
 		if students.length == 1
 			puts "Now we have #{students.length} student".center(width)
@@ -73,7 +73,7 @@ def input_students
 		end
 		puts "Please enter the name of the students".center(width)
 		puts "To finish, just hit return twice".center(width)
-		name = gets.chomp
+		name = gets.chop
 		name = name.capitalize
 	end
 	students
