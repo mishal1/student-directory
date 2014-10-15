@@ -22,12 +22,10 @@ end
 
 def print(students)
 	width =50
-	students.each do |student| 
-	until
+	students_by_cohort = students.sort_by {|a| a[:cohort]}
+	students_by_cohort.each do |student|
 		puts "#{student[:name]} (#{student[:cohort]}) cohort".center(width)
-		break
 	end
-end
 end
 
 def print_footer(names)
@@ -46,10 +44,10 @@ def input_students
 	while !name.empty? do
 		puts "What cohort is the student in?".center(width)
 		cohort=gets.chomp
-			until Date::MONTHNAMES.include?(cohort) || cohort.empty?
+			until Date::MONTHNAMES.include?(cohort.capitalize) || cohort.empty?
 				puts "Please eneter again what cohort is the student in?".center(width)
 				cohort=gets.chomp
-				cohort = cohort.capitalize
+				cohort = cohort.downcase
 			end
 
 			if cohort.empty? 
@@ -65,6 +63,8 @@ def input_students
 		height = gets.chomp
 		students << {:name => name, :cohort => cohort, :hobbies => hobbies, :origin=>origin, :height=> height}
 		puts "Now we have #{students.length} students".center(width)
+		puts "Please enter the name of the students".center(width)
+		puts "To finish, just hit return twice".center(width)
 		name = gets.chomp
 		name = name.capitalize
 	end
