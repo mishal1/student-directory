@@ -43,14 +43,15 @@ def input_students
 	students = []
 	name = gets.chomp
 	name = name.capitalize
-	puts "What are the student's hobbies?".center(width)
-	hobbies = gets.chomp
-	puts "Where is the student's country of birth?".center(width)
-	origin = gets.chomp
-	puts "What is the students height?".center(width)
-	height = gets.chomp
 	while !name.empty? do
-		students << {:name => name, :cohort => :november, :hobbies => hobbies, :origin=>origin, :height=> height}
+		
+		puts "What are the student's hobbies?".center(width)
+		hobbies = gets.chomp
+		puts "Where is the student's country of birth?".center(width)
+		origin = gets.chomp
+		puts "What is the students height?".center(width)
+		height = gets.chomp
+		students << {:name => name, :cohort => cohort, :hobbies => hobbies, :origin=>origin, :height=> height}
 		puts "Now we have #{students.length} students".center(width)
 		name = gets.chomp
 		name = name.capitalize
