@@ -27,7 +27,7 @@ def ask_student_name
 	@name = name.capitalize
 end
 
-def ask_month
+def ask_cohort
 	puts "What cohort is the student in?".center(@width)
 	cohort=STDIN.gets.chomp
 	until Date::MONTHNAMES.include?(cohort.capitalize) || cohort.empty?
@@ -52,17 +52,13 @@ def ask_other_info
 		@height = STDIN.gets.chomp
 end
 
-def add_student
-	@students << {:name=>@name, :cohort=>@cohort.to_sym}
-end
-
 def input_students
 	require 'date'
 	ask_student_name
 	while !@name.empty? do
-		ask_month
+		ask_cohort
 		ask_other_info
-		@students << {:name => @name, :cohort => @cohort.to_sym, :hobbies => @hobbies, :origin=>@origin, :height=> @height}
+		add_student(@name, @cohort)
 		if @students.length == 1
 			puts "Now we have #{@students.length} student".center(@width)
 		else
@@ -88,22 +84,26 @@ def show_students
 end
 
 def save_students
-  file = File.open("students.csv", "a")
+  File.open("students.csv", "a") do |file|
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file << csv_line + "\n"
   end
-  file.close
+  end
 end
 
-def load_students(filename ="students.csv")
-  file = File.open(filename, "r")
+def add_student(name, cohort)
+  @students << {:name => name, :cohort => cohort.to_sym}
+end
+
+def load_students(filename = "students.csv")
+  File.open(filename, "r") do |file|
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {:name => name, :cohort => cohort.to_sym}
+    @name, @cohort = line.chomp.split(",")
+    add_student(@name, @cohort)
   end
-  file.close
+  end
 end
 
 def try_load_students
@@ -149,7 +149,3 @@ file.close
 
 try_load_students
 interactive_menu
-
-
-
-
