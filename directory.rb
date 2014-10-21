@@ -90,10 +90,21 @@ def show_students
   print_footer(@students)
 end
 
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file << csv_line + "\n"
+  end
+  file.close
+end
+
 def process(selection)
 	case selection
     when "1"
       input_students
+      save_students
     when "2"
       show_students
     when "9"
