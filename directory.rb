@@ -72,8 +72,8 @@ end
 def print_menu
 	puts "1. Input students"
     puts "2. Show students"
-    puts "3. Save the list to students.csv"
-    puts "4. Load the list from students.csv"
+    puts "3. Save the list to a file"
+    puts "4. Load the list from a file"
     puts "9. Exit"
 end
 
@@ -83,12 +83,12 @@ def show_students
   print_footer(@students)
 end
 
-def save_students
-  File.open("students.csv", "a") do |file|
-  @students.each do |student|
+def save_students(filename)
+	require "csv"
+	CSV.open(filename, "wb") do |csv|
+	@students.each do |student|
     student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file << csv_line + "\n"
+    csv << student_data
   end
   end
 end
@@ -120,14 +120,16 @@ end
 
 def process(selection)
 	case selection
-    when "1"
+    when "1" 
       input_students
-    when "2"
+    when "2" 
       show_students
-    when "3"
-    	save_students
+    when "3" 
+    	puts "What file do you want to save the list to?"
+    	save_students(STDIN.gets.chomp)
     when "4"
-    	load_students
+    	puts "What file do you want to load the list from?"
+    	load_students(STDIN.gets.chomp)
     when "9"
       exit
     else
