@@ -1,65 +1,74 @@
 @students= []
-
+@width =50
 def print_header
-	width =50
-	puts "The students of my cohort at Makers Academy".center(width)
-	puts "-----------".center(width)
+	puts "The students of my cohort at Makers Academy".center(@width)
+	puts "-----------".center(@width)
 end
 #ADD SORTING BY NAME WITHIN COHORT SORT
 def print_student_list(students)
-	width =50
 	students_by_cohort = students.sort_by {|a| a[:cohort]}
 	students_by_cohort.each do |student|
-		puts "#{student[:name]} (#{student[:cohort]}) cohort".center(width)
+		puts "#{student[:name]} (#{student[:cohort]}) cohort".center(@width)
 	end
 end
 
 def print_footer(names)
-	width =50
 	if names.length == 1
-		puts "Overall, we have #{names.length} great student".center(width)
+		puts "Overall, we have #{names.length} great student".center(@width)
 	else
-		puts "Overall, we have #{names.length} great students".center(width)
+		puts "Overall, we have #{names.length} great students".center(@width)
 	end
 end
-#CAPITALIZE FULL NAME
+
+def ask_student_name
+	puts "Please enter the name of the students".center(@width)
+	puts "To finish, just hit return twice".center(@width)
+	name = STDIN.gets.chomp
+	@name = name.capitalize
+end
+
+def ask_month
+	puts "What cohort is the student in?".center(@width)
+	cohort=STDIN.gets.chomp
+	until Date::MONTHNAMES.include?(cohort.capitalize) || cohort.empty?
+		puts "Please enter again what cohort is the student in?".center(@width)
+		cohort=STDIN.gets.chomp
+		cohort = cohort.downcase
+	end
+
+	if cohort.empty? 
+		@cohort = :november
+	else 
+		@cohort = cohort.to_sym
+	end
+end
+
+def ask_other_info
+	puts "What are the student's hobbies?".center(@width)
+		@hobbies = STDIN.gets.chomp
+		puts "Where is the student's country of birth?".center(@width)
+		@origin = STDIN.gets.chop
+		puts "What is the students height?".center(@width)
+		@height = STDIN.gets.chomp
+end
+
+def add_student
+	@students << {:name=>@name, :cohort=>@cohort.to_sym}
+end
+
 def input_students
 	require 'date'
-	width =50
-	puts "Please enter the name of the students".center(width)
-	puts "To finish, just hit return twice".center(width)
-	name = gets.chomp
-	name = name.capitalize
-	while !name.empty? do
-		puts "What cohort is the student in?".center(width)
-		cohort=gets.chomp
-			until Date::MONTHNAMES.include?(cohort.capitalize) || cohort.empty?
-				puts "Please enter again what cohort is the student in?".center(width)
-				cohort=STDIN.gets.chomp
-				cohort = cohort.downcase
-			end
-
-			if cohort.empty? 
-				cohort = :november
-			else 
-				cohort = cohort.to_sym
-			end
-		puts "What are the student's hobbies?".center(width)
-		hobbies = STDIN.gets.chomp
-		puts "Where is the student's country of birth?".center(width)
-		origin = STDIN.gets.chop
-		puts "What is the students height?".center(width)
-		height = STDIN.gets.chomp
-		@students << {:name => name, :cohort => cohort, :hobbies => hobbies, :origin=>origin, :height=> height}
+	ask_student_name
+	while !@name.empty? do
+		ask_month
+		ask_other_info
+		@students << {:name => @name, :cohort => @cohort.to_sym, :hobbies => @hobbies, :origin=>@origin, :height=> @height}
 		if @students.length == 1
-			puts "Now we have #{@students.length} student".center(width)
+			puts "Now we have #{@students.length} student".center(@width)
 		else
-			puts "Now we have #{@students.length} students".center(width)
+			puts "Now we have #{@students.length} students".center(@width)
 		end
-		puts "Please enter the name of the students".center(width)
-		puts "To finish, just hit return twice".center(width)
-		name = STDIN.gets.chomp
-		name = name.capitalize
+		ask_student_name
 	end
 	@students
 end
@@ -133,5 +142,14 @@ def interactive_menu
   end
 end
 
+file = File.open(__FILE__,"r")
+code =file.read
+puts code
+file.close
+
 try_load_students
 interactive_menu
+
+
+
+
