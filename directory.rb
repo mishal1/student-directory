@@ -79,8 +79,9 @@ def input_students
 end
 
 def print_menu
-   puts "1. Input students"
+	puts "1. Input students"
     puts "2. Show students"
+    puts "3. Save students"
     puts "9. Exit"
 end
 
@@ -104,9 +105,10 @@ def process(selection)
 	case selection
     when "1"
       input_students
-      save_students
     when "2"
       show_students
+    when "3"
+    	save_students
     when "9"
       exit
     else
